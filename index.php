@@ -1,14 +1,12 @@
 <?php
-
-
-
-$file = 'C:\Users\Marcel\Desktop\6848448_06-10-2014_09-10-2014.csv';
+//$file = 'C:\Users\Marcel\Desktop\6848448_06-10-2014_09-10-2014.csv';
 
 $archive = TRUE;
 
 include_once('bank.class.php');
 include_once('ynab.class.php');
 include_once('ing.class.php');
+include_once('sns.class.php');
 
 
 // ***** ING *******************************************************************************************************
@@ -32,11 +30,18 @@ $ynab->set_file($file, $ing, $filename);
 $ynab->create_ynab_file();
 */
 
-
-
 // ***** SNS *******************************************************************************************************
 
+$sns = new \snsClass\sns();
+$mapping = array(0, '', 17, 10);
+$bank_name = 'sns';
+$sns->set_mapping($mapping);
 
+$filename = create_file_name('ynab', $bank_name);
+
+$dir = new DirectoryIterator($bank_name);
+$ynab = new \ynabClass\ynab();
+$ynab->scan_dir_and_create_files($dir, $sns, $filename, $archive);
 
 
 

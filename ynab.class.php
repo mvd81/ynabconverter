@@ -40,8 +40,10 @@ class ynab {
    * @param $archive
    */
   public function scan_dir_and_create_files($dir, $bank_class, $filename, $archive) {
+    $result = array();
     // Scan directory
     foreach ($bank_class->get_files_from_dir($dir) as $file) {
+      //var_dump($file);
       $this->auto_create_file($file, $bank_class, $filename, $archive);
     }
   }
@@ -115,6 +117,7 @@ class ynab {
    * @return bool
    */
   private function write_ynab_file($data) {
+    var_dump($data);
     $file = fopen($this->new_file_name, "w");
 
     // Write headers
