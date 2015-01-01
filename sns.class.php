@@ -30,12 +30,9 @@ class sns implements bank {
     $mapping = $this->get_mapping();
     foreach ($data as $record_id => $file_row) {
 
-      // Skip header
-      //if ($record_id > 0) {
-
       foreach ($mapping as $mapping_key) {
 
-        // 0 doesn't work in switched
+        // 0 doesn't work in switches
         if ($mapping_key === 0) {
           // Date
           $time_stamp = strtotime($file_row[$mapping_key]);

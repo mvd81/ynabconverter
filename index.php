@@ -1,5 +1,5 @@
 <?php
-//$file = 'C:\Users\Marcel\Desktop\6848448_06-10-2014_09-10-2014.csv';
+print '<h1>YNAB converter</h1>';
 
 $archive = TRUE;
 
@@ -11,7 +11,7 @@ include_once('sns.class.php');
 
 // ***** ING *******************************************************************************************************
 $ing = new \ingClass\ing();
-$mapping = array(0, '', 8, 5, 6);
+$mapping = array(0, 1, 99, 8, 5, 6);
 $bank_name = 'ing';
 $ing->set_mapping($mapping);
 
@@ -22,16 +22,7 @@ $dir = new DirectoryIterator($bank_name);
 $ynab = new \ynabClass\ynab();
 $ynab->scan_dir_and_create_files($dir, $ing, $filename, $archive);
 
-// By hand
-/*
-$file = 'C:\Users\Marcel\Desktop\6848448_06-10-2014_09-10-2014.csv';
-$ynab = new \ynabClass\ynab();
-$ynab->set_file($file, $ing, $filename);
-$ynab->create_ynab_file();
-*/
-
 // ***** SNS *******************************************************************************************************
-
 $sns = new \snsClass\sns();
 $mapping = array(0, '', 17, 10);
 $bank_name = 'sns';
@@ -42,8 +33,6 @@ $filename = create_file_name('ynab', $bank_name);
 $dir = new DirectoryIterator($bank_name);
 $ynab = new \ynabClass\ynab();
 $ynab->scan_dir_and_create_files($dir, $sns, $filename, $archive);
-
-
 
 
 // Create filename

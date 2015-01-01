@@ -36,7 +36,7 @@ class ing implements bank {
 
           $price = $file_row[end($mapping)];
 
-          // 0 doesn't work in switched
+          // 0 doesn't work in switches
           if ($mapping_key === 0) {
             // Date
             $time_stamp = strtotime($file_row[$mapping_key]);
@@ -44,23 +44,26 @@ class ing implements bank {
           }
 
           switch ($mapping_key) {
-            case '':
+            case 99:
               // Empty line
               $new_data[$record_id][] = '';
               break;
             case 5:
               // Price
               if ($file_row[$mapping_key] == 'Af') {
+                $new_data[$record_id][] = str_replace(',', '.', $price);
                 $new_data[$record_id][] = '';
-                $new_data[$record_id][] = floatval(str_replace(',', '.', str_replace('.', '', $price)));
               } else {
-                $new_data[$record_id][] = floatval(str_replace(',', '.', str_replace('.', '', $price)));
                 $new_data[$record_id][] = '';
+                $new_data[$record_id][] = str_replace(',', '.', $price);
               }
               $new_data[$record_id][] = '';
               break;
+            case 1:
             case 8:
-              $new_data[$record_id][] = str_replace('  ', '', trim($file_row[$mapping_key]));
+              $pattern = array('  ', ',');
+              $replace = array('', '');
+              $new_data[$record_id][] = str_replace($pattern, $replace, trim($file_row[$mapping_key]));
               break;
           }
         }
